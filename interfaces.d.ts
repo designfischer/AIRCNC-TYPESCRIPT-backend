@@ -1,0 +1,3 @@
+interface IUserBody {
+    email: string
+}
