@@ -22,7 +22,13 @@ export async function getUsers(req: Request, res: Response) {
 }
 
 export async function deleteUser(req: Request, res: Response) {
-
+    try {
+        const { user_id } = req.params
+        const response = await deleteUserService(user_id)
+        return res.status(response.status).json(response.data)
+    } catch(err) {
+        return res.status(500).json(err)
+    }
 }
 
 
@@ -38,4 +44,10 @@ async function getUsersService() {
     const users = await User.find()
     if (users.length === 0) return formatResponse(404, { message: 'No users found' })
     return formatResponse(200, users)
+}
+
+async function deleteUserService(user_id: string) {
+    const deletedUser = await User.findByIdAndRemove(user_id)
+    if (!deletedUser) return formatResponse(404, { message: 'User not found' })
+    return formatResponse(200, { message: 'Deleted successfully', deletedUser })
 }

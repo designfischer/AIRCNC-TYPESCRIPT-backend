@@ -7,6 +7,6 @@ routes.get('/', (req, res) => res.send('API Aircnc in Typescript'))
 
 routes.get('/users', getUsers)
 routes.post('/users', createUser)
-routes.delete('/users', deleteUser)
+routes.delete('/users/:user_id', deleteUser)
 
 export default routes
