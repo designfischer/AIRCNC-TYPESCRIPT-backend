@@ -27,3 +27,13 @@ export async function refuseBookingService(booking_id: string, owner_id: string)
     await booking.save()
     return formatResponse(200, booking)
 }
+
+export async function getBookingsRequetsService(owner_id: string) {
+    const mySpots = await Spot.find({ user: owner_id })
+    if (mySpots.length === 0) return formatResponse(404)
+    const mySpotsIdsArray = mySpots.map(spot => spot._id)
+    const boookingRequest = await Booking.find({ spot: { $in: mySpotsIdsArray } })
+        .populate('spot')
+        .populate('user')
+    return formatResponse(200, boookingRequest)
+}
