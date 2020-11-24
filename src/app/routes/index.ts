@@ -3,7 +3,7 @@ import { createSession } from '../controllers/session-controller'
 import { getSpots } from '../controllers/spot-controller'
 import { createUser, getUsers, deleteUser } from '../controllers/user-controller'
 import { createSpot, deleteSpot, getSpotsByUser } from '../controllers/dashboard-controller'
-import { approveBooking, getBookingsRequests, refuseBooking } from '../controllers/booking-manager-controller'
+import { approveBooking, getBookingById, getBookingsRequests, refuseBooking } from '../controllers/booking-manager-controller'
 import { createBooking, getCreatedBookings } from '../controllers/booking-controller'
 
 const routes = Router()
@@ -28,5 +28,7 @@ routes.get('/bookings/user/:user_id', getCreatedBookings)
 routes.post('/bookings/:booking_id/approve', approveBooking)
 routes.post('/bookings/:booking_id/refuse', refuseBooking)
 routes.get('/bookings/requests', getBookingsRequests)
+
+routes.get('/bookings/:booking_id', getBookingById)
 
 export default routes

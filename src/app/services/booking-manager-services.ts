@@ -37,3 +37,9 @@ export async function getBookingsRequetsService(owner_id: string) {
         .populate('user')
     return formatResponse(200, boookingRequest)
 }
+
+export async function getBookingByIdService(booking_id: string) {
+    const booking = await Booking.findById(booking_id).populate('spot').populate('user')
+    if (!booking) return formatResponse(404)
+    return formatResponse(200, booking)
+}

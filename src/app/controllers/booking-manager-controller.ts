@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { approveBookingService, refuseBookingService, getBookingsRequetsService } from '../services/booking-manager-services'
+import { approveBookingService, refuseBookingService, getBookingsRequetsService, getBookingByIdService } from '../services/booking-manager-services'
 
 export async function approveBooking(req: Request, res: Response) {
     try {
@@ -34,7 +34,11 @@ export async function getBookingsRequests(req: Request, res: Response) {
 }
 
 export async function getBookingById(req: Request, res: Response) {
-    try {} catch(err) {
+    try {
+        const { booking_id } = req.params
+        const response = await getBookingByIdService(booking_id)
+        return res.status(response.status).json(response.data)
+    } catch(err) {
         return res.status(500).json(err)
     }
 }
