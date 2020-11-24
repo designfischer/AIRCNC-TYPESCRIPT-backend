@@ -26,7 +26,11 @@ export async function deleteSpot(req: Request, res: Response) {
 }
 
 export async function getSpots(req: Request, res: Response) {
-    try {} catch(err) {
+    try {
+        const tech = req.query.tech as string[]
+        const response = await getSpotsService(tech)
+        return res.status(response.status).json(response.data)
+    } catch(err) {
         return res.status(500).json(err)
     }
 }
@@ -35,4 +39,15 @@ export async function deleteSpotService(spot_id: string, user_id: string) {
     const deletedSpot = await Spot.findOneAndRemove({ user: user_id }).where({ _id: spot_id })
     if (!deletedSpot) return formatResponse(400, { message: 'Not found' })
     return formatResponse(200, { message: 'Deleted', deletedSpot })
+}
+
+export async function getSpotsService(tech?: string[]) {
+    if (tech) {
+        const spots = await Spot.find({ techs: tech })
+        if (spots.length === 0) return formatResponse(404)
+        return formatResponse(200, spots)
+    }
+    const spots = await Spot.find()
+    if (spots.length === 0) return formatResponse(404)
+    return formatResponse(200, spots)
 }

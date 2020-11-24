@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { createSession } from '../controllers/session-controller'
-import { createSpot, deleteSpot } from '../controllers/spot-controller'
+import { createSpot, deleteSpot, getSpots } from '../controllers/spot-controller'
 import { createUser, getUsers, deleteUser } from '../controllers/user-controller'
 
 const routes = Router()
@@ -13,6 +13,7 @@ routes.get('/users', getUsers)
 routes.post('/users', createUser)
 routes.delete('/users/:user_id', deleteUser)
 
+routes.get('/spots', getSpots)
 routes.post('/spots', createSpot)
 routes.delete('/spots/:spot_id', deleteSpot)
 
