@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import Spot from '../../database/models/Spot'
-import { formatResponse } from '../helpers'
+import { covertStringToArray, formatResponse } from '../helpers'
 import { createSpotService } from '../services/spot-services'
 
 export async function createSpot(req: Request, res: Response) {
@@ -27,7 +27,7 @@ export async function deleteSpot(req: Request, res: Response) {
 
 export async function getSpots(req: Request, res: Response) {
     try {
-        const tech = req.query.tech as string[]
+        const tech = req.query.tech as string
         const response = await getSpotsService(tech)
         return res.status(response.status).json(response.data)
     } catch(err) {
@@ -41,9 +41,10 @@ export async function deleteSpotService(spot_id: string, user_id: string) {
     return formatResponse(200, { message: 'Deleted', deletedSpot })
 }
 
-export async function getSpotsService(tech?: string[]) {
+export async function getSpotsService(tech?: string) {    
     if (tech) {
-        const spots = await Spot.find({ techs: tech })
+        const techsArray = covertStringToArray(tech)
+        const spots = await Spot.find({ techs: { $all: techsArray } })
         if (spots.length === 0) return formatResponse(404)
         return formatResponse(200, spots)
     }
