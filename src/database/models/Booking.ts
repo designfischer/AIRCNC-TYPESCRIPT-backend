@@ -2,9 +2,16 @@ import mongoose from 'mongoose'
 
 interface IBookingModel extends mongoose.Document {
     date: string,
-    status: boolean,
+    status: string,
     user: string,
-    spot: string
+    spot: string | {
+        techs: string[],
+        _id: string,
+        image: string,
+        company: string,
+        price: number,
+        user: string
+    }
 }
 
 const Schema = new mongoose.Schema({
@@ -14,7 +21,7 @@ const Schema = new mongoose.Schema({
         lowercase: true
     },
     status: {
-        type: Boolean,
+        type: String,
         required: true
     },
     user: {

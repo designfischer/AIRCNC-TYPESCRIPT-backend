@@ -3,7 +3,7 @@ import { createSession } from '../controllers/session-controller'
 import { getSpots } from '../controllers/spot-controller'
 import { createUser, getUsers, deleteUser } from '../controllers/user-controller'
 import { createSpot, deleteSpot, getSpotsByUser } from '../controllers/dashboard-controller'
-import { createBooking } from '../controllers/booking-controller'
+import { approveBooking, createBooking } from '../controllers/booking-controller'
 
 const routes = Router()
 
@@ -22,5 +22,7 @@ routes.get('/dashboard', getSpotsByUser)
 routes.delete('/dashboard/:spot_id', deleteSpot)
 
 routes.post('/bookings/:spot_id', createBooking)
+
+routes.post('/bookings/:booking_id/approve', approveBooking)
 
 export default routes
