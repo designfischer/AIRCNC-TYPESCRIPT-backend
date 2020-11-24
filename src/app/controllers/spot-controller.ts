@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
+import { createSpotService } from '../services/spot-services'
 
 export async function createSpot(req: Request, res: Response) {
     try {
-        const body = req.body
+        const body: ISpotBody = req.body
         const user_id = req.headers.user_id as string
         const response = await createSpotService(body, user_id)
         return res.status(response.status).json(response.data)
@@ -22,4 +23,3 @@ export async function getSpots(req: Request, res: Response) {
         return res.status(500).json(err)
     }
 }
-
