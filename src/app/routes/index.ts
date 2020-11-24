@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import { createSession } from '../controllers/session-controller'
-import { createSpot, deleteSpot, getSpots } from '../controllers/spot-controller'
+import { getSpots } from '../controllers/spot-controller'
 import { createUser, getUsers, deleteUser } from '../controllers/user-controller'
-import { getSpotsByUser } from '../controllers/dashboard-controller'
+import { createSpot, deleteSpot, getSpotsByUser } from '../controllers/dashboard-controller'
 
 const routes = Router()
 
@@ -15,9 +15,9 @@ routes.post('/users', createUser)
 routes.delete('/users/:user_id', deleteUser)
 
 routes.get('/spots', getSpots)
-routes.post('/spots', createSpot)
-routes.delete('/spots/:spot_id', deleteSpot)
 
+routes.post('/dashboard', createSpot)
 routes.get('/dashboard', getSpotsByUser)
+routes.delete('/dashboard/:spot_id', deleteSpot)
 
 export default routes
