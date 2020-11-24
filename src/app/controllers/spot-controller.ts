@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { createSpotService, getSpotsService } from '../services/spot-services'
+import { getSpotsService } from '../services/spot-services'
 
 export async function getSpots(req: Request, res: Response) {
     try {
