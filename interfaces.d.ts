@@ -3,8 +3,8 @@ interface IUserBody {
 }
 
 interface ISpotBody {
-    image?: string,
+    image: string,
     company: string,
     price?: number,
-    techs?: string[]
+    techs?: string
 }
