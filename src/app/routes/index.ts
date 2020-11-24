@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { createSession } from '../controllers/session-controller'
-import { createSpot } from '../controllers/spot-controller'
+import { createSpot, deleteSpot } from '../controllers/spot-controller'
 import { createUser, getUsers, deleteUser } from '../controllers/user-controller'
 
 const routes = Router()
@@ -14,5 +14,6 @@ routes.post('/users', createUser)
 routes.delete('/users/:user_id', deleteUser)
 
 routes.post('/spots', createSpot)
+routes.delete('/spots/:spot_id', deleteSpot)
 
 export default routes
