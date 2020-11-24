@@ -23,7 +23,7 @@ routes.get('/dashboard', getSpotsByUser)
 routes.delete('/dashboard/:spot_id', deleteSpot)
 
 routes.post('/bookings/:spot_id', createBooking)
-routes.get('/bookings', getCreatedBookings)
+routes.get('/bookings/user/:user_id', getCreatedBookings)
 
 routes.post('/bookings/:booking_id/approve', approveBooking)
 routes.post('/bookings/:booking_id/refuse', refuseBooking)
