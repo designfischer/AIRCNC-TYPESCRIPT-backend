@@ -1,5 +1,3 @@
-import Booking from "../../database/models/Booking"
-import Spot from "../../database/models/Spot"
 import { formatResponse } from "../helpers"
 import { getBookingByIdRepository, getBookingsByArrayOfSpots } from "../repositories/booking-repository"
 import { getSpotByIdAndUserRepository, getSpotsByUserRepository } from "../repositories/spot-repository"
