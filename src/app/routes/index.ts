@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { createSession } from '../controllers/session-controller'
-import { getSpots } from '../controllers/spot-controller'
+import { getSpots, getSpotById } from '../controllers/spot-controller'
 import { createUser, getUsers, deleteUser } from '../controllers/user-controller'
 import { createSpot, deleteSpot, getSpotsByUser } from '../controllers/dashboard-controller'
 import { approveBooking, getBookingById, getBookingsRequests, refuseBooking } from '../controllers/booking-manager-controller'
@@ -17,6 +17,7 @@ routes.post('/users', createUser)
 routes.delete('/users/:user_id', deleteUser)
 
 routes.get('/spots', getSpots)
+routes.get('/spots/:spot_id', getSpotById)
 
 routes.post('/dashboard', createSpot)
 routes.get('/dashboard', getSpotsByUser)
