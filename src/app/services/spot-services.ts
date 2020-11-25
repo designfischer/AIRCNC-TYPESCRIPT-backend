@@ -34,3 +34,9 @@ export async function getSpotsByUserService(user_id: string) {
     if (spots.length === 0) return formatResponse(404)
     return formatResponse(200, spots)
 }
+
+export async function getSpotByIdService(spot_id: string) {
+    const spot = await Spot.findById(spot_id)
+    if (!spot) return formatResponse(404)
+    return formatResponse(200, spot)
+}

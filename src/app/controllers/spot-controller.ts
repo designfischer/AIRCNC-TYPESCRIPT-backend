@@ -1,7 +1,5 @@
 import { Request, Response } from 'express'
-import Spot from '../../database/models/Spot'
-import { formatResponse } from '../helpers'
-import { getSpotsService } from '../services/spot-services'
+import { getSpotByIdService, getSpotsService } from '../services/spot-services'
 
 export async function getSpots(req: Request, res: Response) {
     try {
@@ -21,10 +19,4 @@ export async function getSpotById(req: Request, res: Response) {
     } catch(err) {
         return res.status(500).json(err)
     }
-}
-
-export async function getSpotByIdService(spot_id: string) {
-    const spot = await Spot.findById(spot_id)
-    if (!spot) return formatResponse(404)
-    return formatResponse(200, spot)
 }
