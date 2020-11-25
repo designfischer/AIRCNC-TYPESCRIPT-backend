@@ -1,13 +1,15 @@
 import Booking from "../../database/models/Booking"
 import Spot from "../../database/models/Spot"
 import { formatResponse } from "../helpers"
+import { getBookingByIdRepository, getBookingsByArrayOfSpots } from "../repositories/booking-repository"
+import { getSpotByIdAndUserRepository, getSpotsByUserRepository } from "../repositories/spot-repository"
 
 export async function approveBookingService(booking_id: string, owner_id: string) {
     const BOOKING_STATUS = 'approved'
-    const booking = await Booking.findById(booking_id).populate('spot')
+    const booking = await getBookingByIdRepository(booking_id)
     if (!booking) return formatResponse(404) 
 
-    const spotOwner = await Spot.findOne({ user: owner_id }).where({ _id: booking.spot })
+    const spotOwner = await getSpotByIdAndUserRepository(owner_id, booking.spot)
     if (!spotOwner) return formatResponse(403, { message: 'Not allowed' })
     
     booking.status = BOOKING_STATUS
@@ -17,10 +19,10 @@ export async function approveBookingService(booking_id: string, owner_id: string
 
 export async function refuseBookingService(booking_id: string, owner_id: string) {
     const BOOKING_STATUS = 'refused'
-    const booking = await Booking.findById(booking_id).populate('spot')
+    const booking = await getBookingByIdRepository(booking_id)
     if (!booking) return formatResponse(404) 
 
-    const spotOwner = await Spot.findOne({ user: owner_id }).where({ _id: booking.spot })
+    const spotOwner = await getSpotByIdAndUserRepository(owner_id, booking.spot)
     if (!spotOwner) return formatResponse(403, { message: 'Not allowed' })
     
     booking.status = BOOKING_STATUS
@@ -29,17 +31,15 @@ export async function refuseBookingService(booking_id: string, owner_id: string)
 }
 
 export async function getBookingsRequetsService(owner_id: string) {
-    const mySpots = await Spot.find({ user: owner_id })
+    const mySpots = await getSpotsByUserRepository(owner_id)
     if (mySpots.length === 0) return formatResponse(404)
-    const mySpotsIdsArray = mySpots.map(spot => spot._id)
-    const boookingRequest = await Booking.find({ spot: { $in: mySpotsIdsArray } })
-        .populate('spot')
-        .populate('user')
+    const mySpotsIdsArray: string[] = mySpots.map(spot => spot._id)
+    const boookingRequest = await getBookingsByArrayOfSpots(mySpotsIdsArray)        
     return formatResponse(200, boookingRequest)
 }
 
 export async function getBookingByIdService(booking_id: string) {
-    const booking = await Booking.findById(booking_id).populate('spot').populate('user')
+    const booking = await getBookingByIdRepository(booking_id)
     if (!booking) return formatResponse(404)
     return formatResponse(200, booking)
 }

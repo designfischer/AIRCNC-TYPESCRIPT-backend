@@ -5,6 +5,11 @@ export async function createSpotRepository(data: ISpotModel) {
     return spot
 }
 
+export async function getSpotByIdAndUserRepository(user: string, _id: string) {
+    const spot = await Spot.findOne({ user }).where({ _id })
+    return spot
+}
+
 export async function deleteByIdAndUserRepository(user: string, _id: string) {
     const spot = await Spot.findOneAndRemove({ user }).where({ _id })
     return spot
