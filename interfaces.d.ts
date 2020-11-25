@@ -16,3 +16,10 @@ interface ISpotModel {
     techs?: string[],
     user: string
 }
+
+interface IBookingModel {
+    date: string,
+    status: string,
+    user: string,
+    spot: string 
+}

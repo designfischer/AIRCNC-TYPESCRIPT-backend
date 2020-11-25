@@ -4,14 +4,7 @@ interface IBookingModel extends mongoose.Document {
     date: string,
     status: string,
     user: string,
-    spot: string | {
-        techs: string[],
-        _id: string,
-        image: string,
-        company: string,
-        price: number,
-        user: string
-    }
+    spot: string 
 }
 
 const Schema = new mongoose.Schema({
