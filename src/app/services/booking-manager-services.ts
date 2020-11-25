@@ -4,6 +4,7 @@ import { getSpotByIdAndUserRepository, getSpotsByUserRepository } from "../repos
 
 export async function approveBookingService(booking_id: string, owner_id: string) {
     const BOOKING_STATUS = 'approved'
+
     const booking = await getBookingByIdRepository(booking_id)
     if (!booking) return formatResponse(404) 
 
@@ -12,11 +13,13 @@ export async function approveBookingService(booking_id: string, owner_id: string
     
     booking.status = BOOKING_STATUS
     await booking.save()
+
     return formatResponse(200, booking)
 }
 
 export async function refuseBookingService(booking_id: string, owner_id: string) {
     const BOOKING_STATUS = 'refused'
+
     const booking = await getBookingByIdRepository(booking_id)
     if (!booking) return formatResponse(404) 
 
@@ -25,19 +28,23 @@ export async function refuseBookingService(booking_id: string, owner_id: string)
     
     booking.status = BOOKING_STATUS
     await booking.save()
+
     return formatResponse(200, booking)
 }
 
 export async function getBookingsRequetsService(owner_id: string) {
     const mySpots = await getSpotsByUserRepository(owner_id)
     if (mySpots.length === 0) return formatResponse(404)
+
     const mySpotsIdsArray: string[] = mySpots.map(spot => spot._id)
-    const boookingRequest = await getBookingsByArrayOfSpots(mySpotsIdsArray)        
+    const boookingRequest = await getBookingsByArrayOfSpots(mySpotsIdsArray) 
+
     return formatResponse(200, boookingRequest)
 }
 
 export async function getBookingByIdService(booking_id: string) {
     const booking = await getBookingByIdRepository(booking_id)
     if (!booking) return formatResponse(404)
+    
     return formatResponse(200, booking)
 }
