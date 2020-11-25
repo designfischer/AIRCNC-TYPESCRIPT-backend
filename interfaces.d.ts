@@ -8,3 +8,11 @@ interface ISpotBody {
     price?: number,
     techs?: string
 }
+
+interface ISpotModel {
+    image: string,
+    company: string,
+    price?: number,
+    techs?: string[],
+    user: string
+}
